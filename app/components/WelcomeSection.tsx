@@ -1,5 +1,7 @@
 // app/components/WelcomeSection.tsx
 
+import { Link } from "@remix-run/react";
+
 export default function WelcomeSection() {
     return (
       <section className="text-center my-10 bg-blue-200 py-10">
@@ -10,7 +12,9 @@ export default function WelcomeSection() {
           placeholder="Search for products or services"
           className="border rounded w-full md:w-1/2 px-4 py-2"
         />
-        <button className="bg-blue-700 text-white py-2 px-4 rounded mt-4">Get Started</button>
+        <Link to="/login">
+            <button className="bg-blue-700 text-white py-2 px-4 rounded mt-4">Get Started</button>
+        </Link>
       </section>
     );
   }

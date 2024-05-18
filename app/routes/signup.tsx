@@ -11,7 +11,7 @@ export default function SignUp() {
           Sign In
         </Link>
         <Link to="/" className="bg-white text-blue-700 py-2 px-4 rounded border border-blue-700 hover:bg-blue-700 hover:text-white">
-          <button type="button">Home</button>
+            <img src="/images/home-icon.png" alt="home" className="h-6 w-6" />
         </Link>
       </div>
       <div className="relative z-20 bg-white p-6 rounded shadow-md w-full max-w-md">

@@ -16,7 +16,7 @@ export default function SignUp() {
       </div>
       <div className="relative z-20 bg-white p-6 rounded shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold mb-4 text-center">Sign Up to Salaama Bank</h2>
-        <p className="text-center mb-6">Quick & Simple way to Automate your payment</p>
+        <p className="text-center mb-6">Quick & Simple way of Banking</p>
         <form>
           <div className="mb-4">
             <label htmlFor="firstName" className="block text-gray-700">First Name</label>

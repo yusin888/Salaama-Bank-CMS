@@ -6,14 +6,17 @@ export default function Login() {
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-white">
       <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-300 transform -skew-y-6 origin-top-left"></div>
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-4 right-4 z-10 flex space-x-4">
         <Link to="/signup" className="bg-white text-blue-700 py-2 px-4 rounded border border-blue-700 hover:bg-blue-700 hover:text-white">
           Sign Up
+        </Link>
+        <Link to="/" className="bg-white text-blue-700 py-2 px-4 rounded border border-blue-700 hover:bg-blue-700 hover:text-white">
+            <img src="/images/home-icon.png" alt="home" className="h-6 w-6" />
         </Link>
       </div>
       <div className="relative z-20 bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold mb-4 text-center">Log In to Salaama Bank</h2>
-        <p className="text-center mb-8">Quick & Simple way to Automate your payment</p>
+        <p className="text-center mb-8">Quick & Simple way of Banking</p>
         <form>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700">Email Address</label>

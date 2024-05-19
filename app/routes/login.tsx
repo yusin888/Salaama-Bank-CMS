@@ -45,12 +45,15 @@ export default function Login() {
             </label>
             <Link to="#" className="text-blue-700 hover:underline">Forgot Password?</Link>
           </div>
+          <Link to="/dashboard">
           <button
             type="submit"
             className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-800"
-          >
-            PROCEED
+          > 
+           PROCEED          
           </button>
+          </Link>
+
         </form>
         <div className="text-center my-4">OR USE</div>
         <div className="flex justify-center space-x-4">

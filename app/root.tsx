@@ -10,6 +10,7 @@ import stylesheet from "~/tailwind.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" }, // FontAwesome
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

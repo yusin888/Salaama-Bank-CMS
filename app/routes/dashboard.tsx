@@ -101,7 +101,7 @@ export default function Dashboard() {
                   <p>Amount: $100</p>
                 </div>
               </div>
-              <Link to="/transactions">
+              <Link to="/transaction">
                 <button className="bg-black text-white py-2 px-4 rounded mt-4 w-full">
                   View Transactions
                 </button>
@@ -116,7 +116,7 @@ export default function Dashboard() {
               <span className="mx-2">to</span>
               <input type="date" className="border p-2 rounded" />
             </div>
-            <Link to="/transactions">
+            <Link to="/transaction">
               <button className="bg-black text-white py-2 px-4 rounded mt-4 w-full">
                 View Transactions
               </button>

@@ -1,8 +1,34 @@
 // app/routes/signup.tsx
 
-import { Link } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
+import { useState } from "react";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: firstName, email, password }),
+    });
+
+    if (response.ok) {
+      navigate("/dashboard");
+    } else {
+      const errorText = await response.text();
+      setError(errorText || "Registration failed");
+    }
+  };
+
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-white">
       <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-300 transform -skew-y-6 origin-top-left"></div>
@@ -11,18 +37,20 @@ export default function SignUp() {
           Sign In
         </Link>
         <Link to="/" className="bg-white text-blue-700 py-2 px-4 rounded border border-blue-700 hover:bg-blue-700 hover:text-white">
-            <img src="/images/home-icon.png" alt="home" className="h-6 w-6" />
+          <img src="/images/home-icon.png" alt="home" className="h-6 w-6" />
         </Link>
       </div>
       <div className="relative z-20 bg-white p-6 rounded shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold mb-4 text-center">Sign Up to Salaama Bank</h2>
         <p className="text-center mb-6">Quick & Simple way of Banking</p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="firstName" className="block text-gray-700">First Name</label>
             <input
               type="text"
               id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               placeholder="John"
               className="w-full px-3 py-2 border rounded"
               aria-label="First Name"
@@ -33,6 +61,8 @@ export default function SignUp() {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="johndoe@example.com"
               className="w-full px-3 py-2 border rounded"
               aria-label="Email Address"
@@ -43,6 +73,8 @@ export default function SignUp() {
             <input
               type="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="**********"
               className="w-full px-3 py-2 border rounded"
               aria-label="Password"
@@ -52,6 +84,7 @@ export default function SignUp() {
             <input type="checkbox" id="terms" className="mr-2" aria-label="Agree to Terms" />
             <label htmlFor="terms" className="text-gray-700">I agree to the Terms of Service and Privacy Policy</label>
           </div>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
             type="submit"
             className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-800"

@@ -1,11 +1,31 @@
-// app/routes/dashboard.tsx
-
-import { useEffect, useRef } from "react";
-import { Link } from "@remix-run/react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "@remix-run/react";
 import { Chart } from "chart.js/auto";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const chartRef = useRef<Chart | null>(null);
+  const [username, setUsername] = useState("");
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetch("http://localhost:3000/user-details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUsername(data.username);
+        })
+        .catch(() => {
+          navigate("/login");
+        });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const ctx = document.getElementById("financialChart") as HTMLCanvasElement;
@@ -46,7 +66,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
         <div className="container mx-auto py-6 px-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Hello, Welcome Ali</h1>
+          <h1 className="text-2xl font-bold">Hello, Welcome {username}</h1>
           <div className="flex items-center space-x-4">
             <Link to="/profile" className="text-blue-700 hover:underline">
               Profile

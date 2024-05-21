@@ -20,10 +20,10 @@ export default function Login() {
       body: JSON.stringify({ username, password }),
     });
 
-    const text = await response.text();
-    console.log(text);
-
-    if (text === "Login successful") {
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.user.username);
       navigate("/dashboard");
     } else {
       setError("Invalid username or password");

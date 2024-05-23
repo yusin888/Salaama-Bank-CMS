@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@remix-run/react";
 import { Chart } from "chart.js/auto";
+import RecentTransactions from "../components/RecentTransactions"; // Import the component
+
+// Type Definitions
+type UserDetails = {
+  username: string;
+  balance: number; // Include balance in UserDetails
+};
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const chartRef = useRef<Chart | null>(null);
-  const [username, setUsername] = useState("");
-  
+  const [username, setUsername] = useState<string>("");
+  const [balance, setBalance] = useState<number>(0.0);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -18,8 +26,9 @@ export default function Dashboard() {
         },
       })
         .then(response => response.json())
-        .then(data => {
+        .then((data: UserDetails) => {
           setUsername(data.username);
+          setBalance(data.balance); // Set the balance from the response
         })
         .catch(() => {
           navigate("/login");
@@ -81,53 +90,38 @@ export default function Dashboard() {
         <section className="bg-white p-6 rounded shadow mb-6">
           <h2 className="text-xl text-center font-bold mb-4">Balance</h2>
           <p className="text-3xl text-center font-bold text-gray-700">
-            Ksh. 200,000.00
+            Ksh. {balance !== undefined ? balance.toFixed(2) : 'Loading...'}
           </p>
           <div className="flex justify-around mt-6 space-x-4">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded flex flex-col items-center">
-              <i className="fas fa-exchange-alt text-3xl"></i>
-              <span>Transfer Money</span>
-            </button>
-            <button className="bg-green-500 text-white py-2 px-4 rounded flex flex-col items-center">
-              <i className="fas fa-university text-3xl"></i>
-              <span>Loans</span>
-            </button>
-            <button className="bg-red-500 text-white py-2 px-4 rounded flex flex-col items-center">
-              <i className="fas fa-money-bill-wave text-3xl"></i>
-              <span>Withdraw</span>
-            </button>
-            <button className="bg-purple-500 text-white py-2 px-4 rounded flex flex-col items-center">
-              <i className="fas fa-money-check-alt text-3xl"></i>
-              <span>Cashing in Cheque</span>
-            </button>
+            <Link to="/transfer-money">
+              <button className="bg-blue-500 text-white py-2 px-4 rounded flex flex-col items-center">
+                <i className="fas fa-exchange-alt text-3xl"></i>
+                <span>Transfer Money</span>
+              </button>
+            </Link>
+            <Link to="/loans">
+              <button className="bg-green-500 text-white py-2 px-4 rounded flex flex-col items-center">
+                <i className="fas fa-university text-3xl"></i>
+                <span>Loans</span>
+              </button>
+            </Link>
+            <Link to="/withdraw">
+              <button className="bg-red-500 text-white py-2 px-4 rounded flex flex-col items-center">
+                <i className="fas fa-money-bill-wave text-3xl"></i>
+                <span>Withdraw</span>
+              </button>
+            </Link>
+            <Link to="/cashing-in-cheque">
+              <button className="bg-purple-500 text-white py-2 px-4 rounded flex flex-col items-center">
+                <i className="fas fa-money-check-alt text-3xl"></i>
+                <span>Cashing in Cheque</span>
+              </button>
+            </Link>
           </div>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-white p-6 rounded shadow">
-            <h2 className="text-xl font-bold mb-4">Recent Transactions</h2>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <i className="fas fa-coins text-3xl mr-4"></i>
-                <div>
-                  <p className="font-bold">Transaction ID: 1234</p>
-                  <p>Amount: $50</p>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <i className="fas fa-coins text-3xl mr-4"></i>
-                <div>
-                  <p className="font-bold">Transaction ID: 5678</p>
-                  <p>Amount: $100</p>
-                </div>
-              </div>
-              <Link to="/transaction">
-                <button className="bg-black text-white py-2 px-4 rounded mt-4 w-full">
-                  View Transactions
-                </button>
-              </Link>
-            </div>
-          </div>
+          <RecentTransactions /> {/* Use the component here */}
 
           <div className="bg-white p-6 rounded shadow">
             <h2 className="text-xl font-bold mb-4">Date Range</h2>
@@ -136,7 +130,7 @@ export default function Dashboard() {
               <span className="mx-2">to</span>
               <input type="date" className="border p-2 rounded" />
             </div>
-            <Link to="/transaction">
+            <Link to="/transactions">
               <button className="bg-black text-white py-2 px-4 rounded mt-4 w-full">
                 View Transactions
               </button>

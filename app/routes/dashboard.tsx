@@ -71,6 +71,11 @@ export default function Dashboard() {
     };
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
@@ -80,9 +85,9 @@ export default function Dashboard() {
             <Link to="/profile" className="text-blue-700 hover:underline">
               Profile
             </Link>
-            <Link to="/logout" className="text-red-700 hover:underline">
+            <button onClick={handleLogout} className="text-red-700 hover:underline">
               Logout
-            </Link>
+            </button>
           </div>
         </div>
       </header>

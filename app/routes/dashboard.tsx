@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@remix-run/react";
 import { Chart } from "chart.js/auto";
-import RecentTransactions from "../components/RecentTransactions"; // Import the component
+import RecentTransactions from "../components/RecentTransactions"; 
 
 // Type Definitions
 type UserDetails = {
